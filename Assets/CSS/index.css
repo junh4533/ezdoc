@@ -1,100 +1,40 @@
-body, html {
-  height: 100%;
-  width:100%;
+body{
+    font-family: Arial, Helvetica, sans-serif;
 }
-body {
-  background-image: url(../Images/login_bg.jpg); 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  font-family: sans-serif;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+.ImgDiv{
+    display: flex;
+    justify-content: center;
 }
-
-.box{
-  position: relative;
-  margin-top: 15vh;
+img{
+  width:60%;
+    height: 60%;
 }
-
-#background_pic{
-  height: 1080px;
-  width: 1920px;
-  background-image: url("../Images/Wallpaper.png");
-  background-size: 100% 100%;
+label{
+    font-size: 20px;
 }
+h1{
 
-.delete_button {
-  background: transparent;
-  border: 1px solid #f00;
-  border-radius: 2em;
-  color: #f00;
-  display: inline;
-  font-size: 12px;
-  height: 20px;
-  line-height: 2px;
-  margin: 0 0 8px;
-  padding: 0;
-  text-align: center;
-  width: 20px;
+    color:rgb(255, 255, 255);
+    background-color: lightskyblue;
+    margin: 1% 20% 3% 20%;
 }
-
-.delete_button:hover{
-  background: #f00;
-  color: #c3e6cb;
+.col-6 {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-top: 3px solid lightskyblue;
+    border-bottom: 3px solid lightskyblue;
 }
-
-form{
-  display:inline;
+input[type=text],input[type=password] {
+    border: 2px solid black;
 }
-
-#form_container{
-  padding-top: 10px;
+.form-group{
+    display: flex;
+    justify-content: center;
 }
-
-.center_button{
-  text-align:center;
-  display: block;
+#Submit_Button{
+    padding: 0 70px 0 70px;
+    background-color: rgb(8, 62, 133);
+    border: 2px solid black;
+    color :white;
+    font-size: 24px;
 }
-
-#log{
-  overflow-y: scroll;
-  max-height:60vh;
-}
-
-/* custom bootstrap */
-.nav-tabs {
-    border-bottom: none;
-}
-
-.tab-content.jumbotron {
-  border-radius: 0 0 .3rem .3rem;
-  max-height:70vh;
-} 
-#donor_container{
-  height:40vh;
-  overflow-y: scroll;
-}
-
-.col-8{
-  text-align: center;
-} 
-#start{
-  height: 77%;
-}
-#center{
-  height: 10%;
-}
-#end{
-  height: 13%;
-}
-
-.row{
-  margin-right: 0;
-  margin-left: 0;
-}
-
-
-
-

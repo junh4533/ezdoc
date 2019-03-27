@@ -6,13 +6,18 @@
 #navbar{
     background-color: lightskyblue;
 }
+
+#app_section{
+    background-color: #001f3f;
+}
+
 .sidenav{
     color:white;
     float:right;
     width: 150px;
     position: fixed;
     z-index: 1;
-    top: 140px;
+    top: 60vh;
     right:0px;
     background:lightskyblue;
     overflow-x: hidden;
@@ -22,3 +27,4 @@
 #appointment_section{
     background-color: lightskyblue;
 }
+

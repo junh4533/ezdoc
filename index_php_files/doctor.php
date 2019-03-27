@@ -1,9 +1,22 @@
 <?php
     session_start();
-    // if(isset($_SESSION['login']) && $_SESSION['login'] == "doctor"){
+    if(isset($_SESSION['login']) && $_SESSION['login'] == "doctor"){
         require_once('../assets/php/connection.php'); 
-        $chart_search = "SELECT appointment, count(*) as number FROM appointment GROUP BY email ";
+        $chart_search = "SELECT appointment, count(*) as number FROM appointment GROUP BY WEEKDAY(appointment)";
+        $chart_search = "SELECT appointment, 
+            count(case when WEEKDAY(appointment)=0 THEN appointment END) as MON, 
+            count(case when WEEKDAY(appointment)=1 THEN appointment END) as TUE, 
+            count(case when WEEKDAY(appointment)=2 THEN appointment END) as WED, 
+            count(case when WEEKDAY(appointment)=3 THEN appointment END) as THU, 
+            count(case when WEEKDAY(appointment)=4 THEN appointment END) as FRI, 
+            count(case when WEEKDAY(appointment)=5 THEN appointment END) as SAT,
+            count(case when WEEKDAY(appointment)=6 THEN appointment END) as SUN
+        FROM appointment 
+        WHERE appointment BETWEEN (SELECT date(curdate() - interval weekday(curdate()) day)) AND (select adddate(now(), INTERVAL 6-weekday(now()) DAY))
+        GROUP BY WEEKDAY(appointment)";
         $chart = mysqli_query($mysql, $chart_search);
+        // $weekday = "WEEKDAY($chart_search)";
+        // $weekday_query = mysqli_query($mysql, $weekday );
 ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -30,16 +43,22 @@
                 google.charts.setOnLoadCallback(drawChart);
                 function drawChart(){
                     var data = google.visualization.arrayToDataTable([  
-                            ['Appointment', 'Email'],  
+                            ['Weekday', 'Appointment'],  
                             <?php  
                             while($row = mysqli_fetch_array($chart))  
                             {  
-                                echo "['".$row["appointment"]."', ".$row["number"]."],";  
+                                echo "['Monday',".$row["MON"]."],";
+                                echo "['Tuesday',".$row["TUE"]."],";
+                                echo "['Wednesday',".$row["WED"]."],";
+                                echo "['Thursday',".$row["THU"]."],";
+                                echo "['Friday',".$row["FRI"]."],";
+                                echo "['Saturday',".$row["SAT"]."],";
+                                echo "['Sunday',".$row["SUN"]."],";
                             }  
                             ?>  
                         ]);  
                     var options = {  
-                        title: 'Test Chart',  
+                        title: 'Weekly Appointments',  
                         //is3D:true,  
                         pieHole: 0.4  
                         };  
@@ -49,14 +68,11 @@
             </script>
         </head>    
         <body>  
-           <div style="width:900px;">  
-                <h3>Make Simple Pie Chart by Google Chart API with PHP Mysql</h3>  
-                <div id="piechart" style="width: 900px; height: 500px;"></div
         <div id='navbar'>
             <h1 style="color:white">Doctor Portal</h1>
         </div>
-     
-            
+           <div style="width:900px;">  
+                <div id="piechart" style="width: 900px; height: 500px;"></div>
     </html>
     <br>
 
@@ -77,8 +93,8 @@
             </thead>
             <tbody></tbody>
         </table>
-    </div>
 
+    </div>
             <?php
                 // $test = appointment->format('Y-m-d H:i:s');
                 // WHERE appointment.format('Y-m-d H:i:s') > date('Y-m-d H:i:s')
@@ -143,9 +159,9 @@
 
         </html>
 <?php
-    // }else{
-    //     session_destroy(); //clears all login information
-    //     header("Location:index.php");
-    // }
+    }else{
+        session_destroy(); //clears all login information
+        header("Location:index.php");
+    }
 ?>
 

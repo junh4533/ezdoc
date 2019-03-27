@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./indexKZ.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/index.css">
     <title>Index</title>
     
 </head>
@@ -33,6 +33,11 @@
       $patient_result = mysqli_query($mysql, $query_patient);
       $patient_password_result = mysqli_query($mysql, $patient_password);
 
+      $query_doctor = "SELECT email FROM doctor_credentials WHERE email = '$username' ";
+      $doctor_password = "SELECT password FROM doctor_credentials WHERE password = '$password' ";
+      $doctor_result = mysqli_query($mysql, $query_doctor);
+      $doctor_password_result = mysqli_query($mysql, $doctor_password);
+
       //check if there is a matching result
       if (mysqli_num_rows($password_result)>0 && mysqli_num_rows($user_result)>0) {
         $_SESSION['login'] = "user";
@@ -40,6 +45,10 @@
       } elseif(mysqli_num_rows($patient_result)>0 && mysqli_num_rows($patient_password_result)>0){
         $_SESSION['login'] = "patient";
         header("Location:patient.php"); //redirect to user page   
+      }
+      elseif(mysqli_num_rows($doctor_result)>0 && mysqli_num_rows($doctor_password_result)>0){
+        $_SESSION['login'] = "doctor";
+        header("Location:doctor.php"); //redirect to user page   
       }
        else {
         ?>
