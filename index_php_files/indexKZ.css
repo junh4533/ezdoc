@@ -1,0 +1,40 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.ImgDiv{
+    display: flex;
+    justify-content: center;
+}
+img{
+  width:60%;
+    height: 60%;
+}
+label{
+    font-size: 20px;
+}
+h1{
+
+    color:rgb(82, 82, 199);
+    background-color: lightskyblue;
+    margin: 1% 20% 3% 20%;
+}
+.col-6 {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-top: 3px solid lightskyblue;
+    border-bottom: 3px solid lightskyblue;
+}
+input[type=text],input[type=password] {
+    border: 2px solid black;
+}
+.form-group{
+    display: flex;
+    justify-content: center;
+}
+#Submit_Button{
+    padding: 0 70px 0 70px;
+    background-color: rgb(8, 62, 133);
+    border: 2px solid black;
+    color :white;
+    font-size: 24px;
+}
