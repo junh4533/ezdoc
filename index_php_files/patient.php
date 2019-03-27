@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    if(isset($_SESSION['login']) && $_SESSION['login'] == "patient"){
+    // session_start();
+    // if(isset($_SESSION['login']) && $_SESSION['login'] == "patient"){
         require_once('../assets/php/connection.php'); 
 ?>
         <!DOCTYPE html>
@@ -16,37 +16,38 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
             
-            <link rel="stylesheet" href="../Assets/CSS/index.css" type="text/css">
+            <link rel="stylesheet" href="../Assets/CSS/user.css" type="text/css">
         </head>
         <body>
-        <h1>Patient Portal</h1>
-        <br><br>
-        <h4>Welcome back,
-        <br><br>
+        <div id='navbar'>
+        <h1 style="color:white">Patient Portal</h1>
+        </div>
+        <!-- <h4>Welcome back,
+        
           For verification purposes, kindly re-enter the fields below and select a date and time to visit our office</h4>
-          <br>
-          <h4>Hour Of Operations</h4>
-<ul>
-  <li>Monday 10AM - 6PM</li>
-  <li>Tuesdays to  Fridays 9AM - 5PM</li>
-  <li>Weekends Close</li>
-</ul>  
-
-          <br>
+          <br> -->
+          <div class="sidenav">
+          <h5>Hour Of Operations</h4>
+                <ul>
+                <li>Mon:<br> 10AM - 6PM</li>
+                <li>Tue to Fri:<br> 9AM - 5PM</li>
+                <li>Weekends Close</li>
+                </ul>  
+          </div>
             <form method="post">
+                <div class="form-group">
                 First name:<br>
-                <input type="text" name="$fn>
-                <br>
+                <input type="text" name="$fn">
+                </div>
                 Last name:<br>
                 <input type="text" name="ln" >
-                <br>
+                </div>
                 Phone number:<br>
                 <input type="text" name="phone" >
-                <br>
+                </div>
                 Email:<br>
                 <input type="text" name="email">
-                <br>
-                <br>
+                </div>
                 Appointment: <br>
                 <input type="datetime-local" name="appointment">
                 <br><br>
@@ -94,9 +95,9 @@
 
         </html>
 <?php
-    }else{
-        session_destroy(); //clears all login information
-        header("Location:index.php");
-    }
+    // }else{
+    //     session_destroy(); //clears all login information
+    //     header("Location:index.php");
+    // }
 ?>
 

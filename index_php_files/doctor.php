@@ -1,7 +1,9 @@
 <?php
     session_start();
-    if(isset($_SESSION['login']) && $_SESSION['login'] == "user"){
+    // if(isset($_SESSION['login']) && $_SESSION['login'] == "doctor"){
         require_once('../assets/php/connection.php'); 
+        $chart_search = "SELECT appointment, count(*) as number FROM appointment GROUP BY email ";
+        $chart = mysqli_query($mysql, $chart_search);
 ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -17,63 +19,45 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
             
+
             <link rel="stylesheet" href="../assets/CSS/user.css" type="text/css">
         </head>
 
         <body>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>  
+            <script>
+                google.charts.load('current',{'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart(){
+                    var data = google.visualization.arrayToDataTable([  
+                            ['Appointment', 'Email'],  
+                            <?php  
+                            while($row = mysqli_fetch_array($chart))  
+                            {  
+                                echo "['".$row["appointment"]."', ".$row["number"]."],";  
+                            }  
+                            ?>  
+                        ]);  
+                    var options = {  
+                        title: 'Test Chart',  
+                        //is3D:true,  
+                        pieHole: 0.4  
+                        };  
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));  
+                    chart.draw(data, options); 
+                }
+            </script>
+        </head>    
+        <body>  
+           <div style="width:900px;">  
+                <h3>Make Simple Pie Chart by Google Chart API with PHP Mysql</h3>  
+                <div id="piechart" style="width: 900px; height: 500px;"></div
         <div id='navbar'>
-            <h1 style="color:white">Administrative Portal</h1>
+            <h1 style="color:white">Doctor Portal</h1>
         </div>
      
-    <div class="row">
-        <div class="col-6">
-        <br>
-            <h2>Create Patient Account</h2>
-<form method="post">
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-    </div>
-    <div class="form-group">
-      <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
-    </div>
-    <button type="submit" class="btn btn-primary" value="Submit" name='add_patient'>Submit</button>
-  </form>
-        </div> 
-
-        <div class="col-6">
-        
-            <h2 >Create an Appointment</h2>
-
-            <form method="post">
-                <div class="form-group">
-                    <label>First Name:</label>
-                    <input type="text" class="form-control" name="fn">
-                </div>
-                <div class="form-group">
-                    <label>Last name:</label>
-                    <input type="text" class="form-control"  name="ln">
-                </div>
-                <div class="form-group">
-                    <label>Phone number:</label>
-                    <input type="text" class="form-control"  name="phone">
-                </div>
-                <div class="form-group">
-                    <label>Email:</label>
-                    <input type="text" class="form-control" name="email">
-                </div>
-                <div class="form-group">
-                    <label>Appointment:</label>
-                    <input type="datetime-local" class="form-control" name="appointment">
-                </div>
-                <button type="submit" class="btn btn-primary" name='submit_appointment'>Submit</button>
-            </form>
-            <br>
-        </div>
-
-      
-    </div>
+            
+    </html>
     <br>
 
     <div class="bottomPage">
@@ -159,9 +143,9 @@
 
         </html>
 <?php
-    }else{
-        session_destroy(); //clears all login information
-        header("Location:index.php");
-    }
+    // }else{
+    //     session_destroy(); //clears all login information
+    //     header("Location:index.php");
+    // }
 ?>
 

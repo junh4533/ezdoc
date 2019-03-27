@@ -1,0 +1,24 @@
+.col-6{
+    border: 5px solid #001f3f;
+    text-align: center;
+}
+
+#navbar{
+    background-color: lightskyblue;
+}
+.sidenav{
+    color:white;
+    float:right;
+    width: 150px;
+    position: fixed;
+    z-index: 1;
+    top: 140px;
+    right:0px;
+    background:lightskyblue;
+    overflow-x: hidden;
+    padding: 8px 10px;
+}
+
+#appointment_section{
+    background-color: lightskyblue;
+}
