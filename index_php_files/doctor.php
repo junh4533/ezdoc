@@ -96,8 +96,6 @@
 
     </div>
             <?php
-                // $test = appointment->format('Y-m-d H:i:s');
-                // WHERE appointment.format('Y-m-d H:i:s') > date('Y-m-d H:i:s')
                 $search_query = "SELECT * FROM appointment WHERE appointment > CURRENT_TIMESTAMP ORDER BY appointment ASC";
                 $submit_result = mysqli_query($mysql, $search_query);
 
@@ -109,14 +107,6 @@
                     $email = $appointment_row['email'];
             ?>
                     <script> 
-                        // var now = new Date();
-                        // now.format("yyyy-MM-dd hh:mm:TT");
-                        // var today = new Date();
-                        // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                        // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                        // var dateTime = date+' '+time;
-                        // console.log(dateTime);
-
                         var table = document.getElementById("appointment_table");
                         var row = table.insertRow();
 

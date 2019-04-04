@@ -32,11 +32,11 @@
 <form method="post">
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
     </div>
     <button type="submit" class="btn btn-primary" value="Submit" name='add_patient'>Submit</button>
   </form>
@@ -49,23 +49,23 @@
             <form method="post">
                 <div class="form-group">
                     <label>First Name:</label>
-                    <input type="text" class="form-control" name="fn">
+                    <input type="text" class="form-control" name="fn" required>
                 </div>
                 <div class="form-group">
                     <label>Last name:</label>
-                    <input type="text" class="form-control"  name="ln">
+                    <input type="text" class="form-control"  name="ln" required>
                 </div>
                 <div class="form-group">
                     <label>Phone number:</label>
-                    <input type="text" class="form-control"  name="phone">
+                    <input type="text" class="form-control"  name="phone" required>
                 </div>
                 <div class="form-group">
                     <label>Email:</label>
-                    <input type="text" class="form-control" name="email">
+                    <input type="text" class="form-control" name="email" required>
                 </div>
                 <div class="form-group">
                     <label>Appointment:</label>
-                    <input type="datetime-local" class="form-control" name="appointment">
+                    <input type="datetime-local" class="form-control" name="appointment" required>
                 </div>
                 <button type="submit" class="btn btn-primary" name='submit_appointment'>Submit</button>
             </form>
@@ -96,8 +96,6 @@
     </div>
 
             <?php
-                // $test = appointment->format('Y-m-d H:i:s');
-                // WHERE appointment.format('Y-m-d H:i:s') > date('Y-m-d H:i:s')
                 $search_query = "SELECT * FROM appointment WHERE appointment > CURRENT_TIMESTAMP ORDER BY appointment ASC";
                 $submit_result = mysqli_query($mysql, $search_query);
 
@@ -109,14 +107,6 @@
                     $email = $appointment_row['email'];
             ?>
                     <script> 
-                        // var now = new Date();
-                        // now.format("yyyy-MM-dd hh:mm:TT");
-                        // var today = new Date();
-                        // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                        // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                        // var dateTime = date+' '+time;
-                        // console.log(dateTime);
-
                         var table = document.getElementById("appointment_table");
                         var row = table.insertRow();
 
@@ -144,6 +134,8 @@
 
                     $submit_query = "INSERT INTO appointment(fn,ln,phone,email,appointment) VALUES('$fn','$ln','$phone','$email','$appointment')";
                     $submit_result = mysqli_query($mysql, $submit_query);
+                    
+                    require_once('../assets/php/query_error.php');
                 }
 
                 if(isset($_POST['add_patient'])){ 
@@ -152,6 +144,8 @@
 
                     $submit_query = "INSERT INTO patient_credentials(email,password) VALUES('$email','$password')";
                     $submit_result = mysqli_query($mysql, $submit_query);
+
+                    require_once('../assets/php/query_error.php');
                 }
             ?>
         

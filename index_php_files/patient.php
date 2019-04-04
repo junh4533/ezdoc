@@ -71,7 +71,6 @@
 
           
             <?php
-               
                 $search_query = "SELECT * FROM appointment WHERE email='$email'";
                 $submit_result = mysqli_query($mysql, $search_query);
 
@@ -89,22 +88,48 @@
                     </script>
             <?php
                 }
-                
-                if(isset($_POST['submit_appointment'])){ 
 
-                    // the message
-                    $msg = "Test";
+                $appointment = $_POST['appointment'];
+                if (isset($appointment)){ 
+                    $check_email = "SELECT email from patient_credentials WHERE email = '$email'";
+                    $search_query = "SELECT appointment FROM appointment WHERE email = '$email' AND appointment = '$appointment'";
+                    $submit_result = mysqli_query($mysql, $search_query);
+                    //if patient account exists
+                    if (mysqli_num_rows(mysqli_query($mysql, $check_email)) > 0){ 
+                        //if appointment doesnt already exist
+                        if (mysqli_num_rows($submit_result) == 0){ 
+                            $submit_query = "INSERT INTO appointment(fn,ln,phone,email,appointment) VALUES('$fn','$ln','$phone','$email','$appointment')";
+                            $submit_result = mysqli_query($mysql, $submit_query);
+                            
+                            $dateTimeSplit = explode("T",$appointment);
+                            $date = $dateTimeSplit[0];
+                            $time = $dateTimeSplit[1];
+                            $date_output = date('M d, Y',strtotime($date));
+                            $time_output = " at ".date('h:i:s a',strtotime($time));
 
-                    // use wordwrap() if lines are longer than 70 characters
-                    // $msg = wordwrap($msg,70);
-
-                    // send emails
-                    mail("bctcproject@gmail.com","Appointment",$msg);
-                    
-                    $appointment = $_POST['appointment'];
-
-                    $submit_query = "INSERT INTO appointment(fn,ln,phone,email,appointment) VALUES('$fn','$ln','$phone','$email','$appointment')";
-                    $submit_result = mysqli_query($mysql, $submit_query);
+                            $message = "EZDoct Appointment scheduled for ".$date_output.$time_output;
+                            $headers = "From: EZDoctPortal@gmail.com";
+                            $email = 'bctcproject@gmail.com';
+                            mail($email, "EZDoct Appointment", $message, $headers);
+                        ?>
+                            <div class="alert alert-success">
+                                Appointment created!
+                            </div>
+                        <?php
+                        }else{
+                            ?>
+                            <div class="alert alert-danger">
+                                Appointment already exists!
+                            </div>
+                            <?php
+                        }
+                    }else{
+                    ?>
+                        <div class="alert alert-danger">
+                            There are no registered patients with this email. Please create the patient account before making appointments.
+                        </div>
+                    <?php
+                    }
                 }
 
             ?>
